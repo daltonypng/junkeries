@@ -3,6 +3,17 @@ import queue
 import threading
 import time
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 encodingsList = ["utf8", "cp1252", "iso-8859-1", "iso-8859-2"]
 maxExcondingsSuported = len(encodingsList)
 
@@ -32,14 +43,15 @@ def search_worker():
         if event.is_set() and search_queue.empty():
             return 
 
-        item = search_queue.get_nowait()
+        item = search_queue.get()
         fileContent = try_open(item, 0)
         n = 0
         
         for line in fileContent:
             n += 1
             if search_pattern in line: 
-                print(item + ":" + str(n) + " " + line)
+                print(bcolors.OKCYAN + item + ":" + bcolors.ENDC + bcolors.OKGREEN + str(n) + bcolors.ENDC + "\n" + 
+                      line.lstrip())
 
 def seek_and_destroy(path, extension):
 
@@ -67,13 +79,14 @@ def vine():
     if extension:
         extension = "." + extension
 
-    seek_and_destroy(path, extension)
-    
     print("---------------------")
 
     threading.Thread(target=search_worker).start()
+
+    seek_and_destroy(path, extension)
 
 if __name__ == "__main__":
 
     search_pattern = input("Search pattern: ")
     vine()
+
