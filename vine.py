@@ -19,6 +19,7 @@ maxExcondingsSuported = len(encodingsList)
 
 search_queue = queue.Queue()
 event = threading.Event()
+printing_results = threading.Event()
 
 def try_open(file, n):
 
@@ -35,7 +36,17 @@ def try_open(file, n):
             return try_open(file, n)
  
     return ""
- 
+
+def loading():
+    while True: 
+        for c in [".", "..", "..."]:
+
+            if printing_results.is_set():
+                print("")
+                return 
+            print("\rsearching " + c, end="")
+            time.sleep(0.1)
+
 def search_worker():
 
     while True: 
@@ -50,8 +61,8 @@ def search_worker():
         for line in fileContent:
             n += 1
             if search_pattern in line: 
-                print(bcolors.OKCYAN + item + ":" + bcolors.ENDC + bcolors.OKGREEN + str(n) + bcolors.ENDC + "\n" + 
-                      line.lstrip())
+                printing_results.set()
+                print(bcolors.OKCYAN + item + ":" + bcolors.ENDC + bcolors.OKGREEN + str(n) + bcolors.ENDC + " " + line.lstrip())
 
 def seek_and_destroy(path, extension):
 
@@ -76,11 +87,15 @@ def vine():
     if not path:
         path = "."
 
+    if path[-1] not in "/":
+        path += "/"
+
     if extension:
         extension = "." + extension
 
     print("---------------------")
 
+    threading.Thread(target=loading).start()
     threading.Thread(target=search_worker).start()
 
     seek_and_destroy(path, extension)
