@@ -31,6 +31,7 @@ nnoremap <C-O> :norm ^i//<CR>
 nnoremap <C-o> :Buffers<CR>
 nnoremap <C-z> u
 nnoremap <C-y> <C-R>
+nnoremap <C-l> :noh<CR>
 nnoremap <C-Down> :m .+1<CR>==
 nnoremap <C-Up> :m .-2<CR>==
 nnoremap <C-Left> b
