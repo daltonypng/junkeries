@@ -1,0 +1,58 @@
+set number
+
+set expandtab
+set tabstop=3
+set shiftwidth=3
+set autoindent
+
+set splitbelow splitright
+set hlsearch
+set ignorecase
+set nosmartcase
+set autowrite
+
+set titlestring=%t
+set title
+set ruler
+set ic
+set wrap!
+set sidescroll=1
+set showmatch
+
+syntax on
+colorscheme slate
+
+map <C-p> :Files <CR>
+map <F12> :tag <C-r><C-w>
+map <C-n> # zz
+map <C-m> * zz
+
+nnoremap <C-O> :norm ^i//<CR>
+nnoremap <C-o> :Buffers<CR>
+nnoremap <C-z> u
+nnoremap <C-y> <C-R>
+nnoremap <C-Down> :m .+1<CR>==
+nnoremap <C-Up> :m .-2<CR>==
+nnoremap <C-Left> b
+nnoremap <C-Right> e
+
+inoremap <C-z> <C-O>u
+inoremap <C-y> <C-O><C-R>
+
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/bundle')
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+
+call plug#end()
