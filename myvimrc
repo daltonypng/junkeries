@@ -1,5 +1,5 @@
 set number
-
+set relativenumber
 set expandtab
 set tabstop=3
 set shiftwidth=3
@@ -18,20 +18,28 @@ set ic
 set wrap!
 set sidescroll=1
 set showmatch
+set viminfo='0,:0,<0,@0,f0
+set omnifunc=syntaxcomplete#Complete
+set clipboard=unnamed
+set complete+=kspell
+set completeopt=menuone,longest
+
+filetype plugin on
 
 syntax on
 colorscheme slate
 
 map <C-p> :Files <CR>
 map <F12> :tag <C-r><C-w>
-map <C-n> # zz
-map <C-m> * zz
+
+vnoremap <silent><A-p> :AutoInlineComment<CR>
+nnoremap <silent><A-p> :AutoInlineComment<CR>
 
 nnoremap <C-O> :norm ^i//<CR>
 nnoremap <C-o> :Buffers<CR>
 nnoremap <C-z> u
 nnoremap <C-y> <C-R>
-nnoremap <C-l> :noh<CR>
+nnoremap <C-l> :noh<CR>:w<CR>:call TrimWhitespace()<CR>:echo "Saved"<CR>
 nnoremap <C-Down> :m .+1<CR>==
 nnoremap <C-Up> :m .-2<CR>==
 nnoremap <C-Left> b
@@ -40,20 +48,43 @@ nnoremap <C-Right> e
 inoremap <C-z> <C-O>u
 inoremap <C-y> <C-O><C-R>
 
+ab sep /*****************************************************************************/<CR>
+
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+let g:default_inline_comment = '//'
+
+let mapleader=" "
+let maplocalleader=" "
 
 if empty(glob(data_dir . '/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+
 call plug#begin('~/.vim/bundle')
 
+Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
+Plug 'preservim/nerdtree'
+Plug 'rafi/awesome-vim-colorschemes'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tc50cal/vim-terminal'
+Plug 'KarimElghamry/vim-auto-comment'
+Plug 'vim-scripts/AutoComplPop'
 
 call plug#end()
