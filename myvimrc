@@ -27,7 +27,6 @@ set completeopt=menuone,longest
 filetype plugin on
 
 syntax on
-colorscheme slate
 
 map <C-p> :Files <CR>
 map <F12> :tag <C-r><C-w>
@@ -39,16 +38,21 @@ nnoremap <C-O> :norm ^i//<CR>
 nnoremap <C-o> :Buffers<CR>
 nnoremap <C-z> u
 nnoremap <C-y> <C-R>
-nnoremap <C-l> :noh<CR>:w<CR>:call TrimWhitespace()<CR>:echo "Saved"<CR>
+nnoremap <C-l> :noh<CR>
+nnoremap <C-s> :w<CR>:call TrimWhitespace()<CR>:echo strftime('%a, %d %b %Y %H:%M:%S')<CR>
 nnoremap <C-Down> :m .+1<CR>==
 nnoremap <C-Up> :m .-2<CR>==
 nnoremap <C-Left> b
 nnoremap <C-Right> e
 
+noremap x "_x
+noremap <Del> "_x
+noremap D "_D
+noremap d "_d
+noremap dd "_dd
+
 inoremap <C-z> <C-O>u
 inoremap <C-y> <C-O><C-R>
-
-ab sep /*****************************************************************************/<CR>
 
 autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
@@ -86,5 +90,8 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'tc50cal/vim-terminal'
 Plug 'KarimElghamry/vim-auto-comment'
 Plug 'vim-scripts/AutoComplPop'
+Plug 'navarasu/onedark.nvim'
 
 call plug#end()
+
+colorscheme onedark
