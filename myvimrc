@@ -29,7 +29,7 @@ filetype plugin on
 syntax on
 
 map <C-p> :Files <CR>
-map <F12> :tag <C-r><C-w>
+map <F12> :tag <C-r><C-w><CR>
 
 vnoremap <silent><A-p> :AutoInlineComment<CR>
 nnoremap <silent><A-p> :AutoInlineComment<CR>
@@ -40,10 +40,14 @@ nnoremap <C-z> u
 nnoremap <C-y> <C-R>
 nnoremap <C-l> :noh<CR>
 nnoremap <C-s> :w<CR>:call TrimWhitespace()<CR>:echo strftime('%a, %d %b %Y %H:%M:%S')<CR>
-nnoremap <C-Down> :m .+1<CR>==
-nnoremap <C-Up> :m .-2<CR>==
+
+nnoremap <C-Up> # zz
+nnoremap <C-Down> * zz
 nnoremap <C-Left> b
 nnoremap <C-Right> e
+
+nnoremap <S-Up> :-5<CR>zz
+nnoremap <S-Down> :+5<CR>zz
 
 noremap x "_x
 noremap <Del> "_x
