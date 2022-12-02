@@ -15,7 +15,6 @@ set cpo&vim
 " Exceptions for my "Very Own" (TM) user variables naming style.
 " If you don't like this, comment it
 syn match  clipperUserVariable  "\<[a,b,c,d,h,l,n,o,u,x][A-Z][A-Za-z0-9_]*\>"
-" syn match  clipperUserVariable        "\<[this]\>"
 
 " Clipper is case insensitive ( see "exception" above )
 syn case ignore
@@ -112,7 +111,9 @@ syntax match clipperCommentError        "\*/"
 
 " Lines beginning with an "*" are comments too
 syntax match clipperComment             "^\*.*"
-
+"
+" Function callers
+syntax match clipperFunction "\w\+\s*("
 
 " Define the default highlighting.
 " Only when an item doesn't have highlighting yet
