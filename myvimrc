@@ -1,3 +1,24 @@
+call plug#begin('~/.vim/bundle')
+
+Plug 'tpope/vim-surround'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'preservim/nerdtree'
+Plug 'rafi/awesome-vim-colorschemes'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tc50cal/vim-terminal'
+Plug 'KarimElghamry/vim-auto-comment'
+Plug 'vim-scripts/AutoComplPop'
+Plug 'navarasu/onedark.nvim'
+
+call plug#end()
+
+colorscheme onedark
+
 set number
 set relativenumber
 set expandtab
@@ -28,26 +49,27 @@ filetype plugin on
 
 syntax on
 
-map <C-p> :Files <CR>
-map <F12> :tag <C-r><C-w><CR>
+nnoremap <silent><C-p> :Files<CR>
+nnoremap <silent><C-o> :Buffers<CR>
+nnoremap <silent><C-r> :Tags<CR>
+
+nnoremap <silent><F12> :tag <C-r><C-w><CR>
 
 vnoremap <silent><A-p> :AutoInlineComment<CR>
 nnoremap <silent><A-p> :AutoInlineComment<CR>
 
-nnoremap <C-O> :norm ^i//<CR>
-nnoremap <C-o> :Buffers<CR>
 nnoremap <C-z> u
 nnoremap <C-y> <C-R>
-nnoremap <C-l> :noh<CR>
-nnoremap <C-s> :w<CR>:call TrimWhitespace()<CR>:echo strftime('%a, %d %b %Y %H:%M:%S')<CR>
+nnoremap <silent><C-l> :noh<CR>
+nnoremap <silent><C-s> :w<CR>:call TrimWhitespace()<CR>:echo strftime('%a, %d %b %Y %H:%M:%S')<CR>
 
-nnoremap <C-Up> # zz
-nnoremap <C-Down> * zz
+nnoremap <silent><C-Up> # zz
+nnoremap <silent><C-Down> * zz
 nnoremap <C-Left> b
 nnoremap <C-Right> e
 
-nnoremap <S-Up> :-5<CR>zz
-nnoremap <S-Down> :+5<CR>zz
+nnoremap <silent><S-Up> :silent! :-5<CR>zz
+nnoremap <silent><S-Down> :silent! :+5<CR>zz
 
 noremap x "_x
 noremap <Del> "_x
@@ -61,6 +83,8 @@ inoremap <C-y> <C-O><C-R>
 autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 let g:default_inline_comment = '//'
@@ -78,24 +102,3 @@ fun! TrimWhitespace()
     keeppatterns %s/\s\+$//e
     call winrestview(l:save)
 endfun
-
-call plug#begin('~/.vim/bundle')
-
-Plug 'tpope/vim-surround'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
-Plug 'preservim/nerdtree'
-Plug 'rafi/awesome-vim-colorschemes'
-Plug 'ryanoasis/vim-devicons'
-Plug 'tc50cal/vim-terminal'
-Plug 'KarimElghamry/vim-auto-comment'
-Plug 'vim-scripts/AutoComplPop'
-Plug 'navarasu/onedark.nvim'
-
-call plug#end()
-
-colorscheme onedark
