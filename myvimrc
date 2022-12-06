@@ -49,10 +49,6 @@ filetype plugin on
 
 syntax on
 
-nnoremap <silent><C-p> :Files<CR>
-nnoremap <silent><C-o> :Buffers<CR>
-nnoremap <silent><C-r> :Tags<CR>
-
 nnoremap <silent><F12> :tag <C-r><C-w><CR>
 
 vnoremap <silent><A-p> :AutoInlineComment<CR>
@@ -76,6 +72,11 @@ noremap <Del> "_x
 noremap D "_D
 noremap d "_d
 noremap dd "_dd
+
+nnoremap <silent><C-p> :Files<CR>
+nnoremap <silent><C-o> :Buffers<CR>
+nnoremap <silent><C-R> :Tags<CR>
+nnoremap <silent><C-r> :BTags<CR>
 
 inoremap <C-z> <C-O>u
 inoremap <C-y> <C-O><C-R>
