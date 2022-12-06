@@ -75,7 +75,7 @@ noremap dd "_dd
 
 nnoremap <silent><C-p> :Files<CR>
 nnoremap <silent><C-o> :Buffers<CR>
-nnoremap <silent><C-R> :Tags<CR>
+nnoremap <silent><A-r> :Tags<CR>
 nnoremap <silent><C-r> :BTags<CR>
 
 inoremap <C-z> <C-O>u
