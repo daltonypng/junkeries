@@ -41,7 +41,7 @@ set sidescroll=1
 set showmatch
 set viminfo='0,:0,<0,@0,f0
 set omnifunc=syntaxcomplete#Complete
-set clipboard=unnamed
+set clipboard=unnamedplus,unnamed
 set complete+=kspell
 set completeopt=menuone,longest
 
@@ -49,15 +49,15 @@ filetype plugin on
 
 syntax on
 
-nnoremap <silent><F12> :tag <C-r><C-w><CR>
+nnoremap <F9> :call HBLinterRun()<CR>
 
 vnoremap <silent><A-p> :AutoInlineComment<CR>
 nnoremap <silent><A-p> :AutoInlineComment<CR>
 
-nnoremap <c-z> :u<CR>
-vnoremap <c-z> :u<CR> 
-inoremap <c-z> <c-o>:u<CR>
-vnoremap <c-z> <c-o>:u<CR>
+nnoremap <C-z> :u<CR>
+vnoremap <C-z> :u<CR>
+inoremap <C-z> <c-o>:u<CR>
+vnoremap <C-z> <c-o>:u<CR>
 
 nnoremap <C-y> <C-R>
 nnoremap <silent><C-l> :noh<CR>
@@ -87,7 +87,8 @@ inoremap <C-y> <C-O><C-R>
 
 autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd Bufenter * let g:my_current_file_path = expand("%")
+autocmd Bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
@@ -106,4 +107,8 @@ fun! TrimWhitespace()
     let l:save = winsaveview()
     keeppatterns %s/\s\+$//e
     call winrestview(l:save)
+endfun
+
+fun! HBLinterRun()
+    exe '!hblint ' . g:my_current_file_path
 endfun
