@@ -54,7 +54,11 @@ nnoremap <silent><F12> :tag <C-r><C-w><CR>
 vnoremap <silent><A-p> :AutoInlineComment<CR>
 nnoremap <silent><A-p> :AutoInlineComment<CR>
 
-nnoremap <C-z> u
+nnoremap <c-z> :u<CR>
+vnoremap <c-z> :u<CR> 
+inoremap <c-z> <c-o>:u<CR>
+vnoremap <c-z> <c-o>:u<CR>
+
 nnoremap <C-y> <C-R>
 nnoremap <silent><C-l> :noh<CR>
 nnoremap <silent><C-s> :w<CR>:call TrimWhitespace()<CR>:echo strftime('%a, %d %b %Y %H:%M:%S')<CR>
